@@ -29,11 +29,24 @@
           <div class="healthbar__value"></div>
         </div>
       </section>
-      <section id="controls">
+      <section id="controls" v-if="!winner" >
         <button @click="attackMonster">ATTACK</button>
         <button @click="specialAttackMonster">SPECIAL ATTACK</button>
-        <button>HEAL</button>
+        <button @click="healPlayer">HEAL</button>
         <button>SURRENDER</button>
+        
+      </section>
+      <section id="gameover" v-else>
+        <h1>Game Over</h1>
+        <h2 v-if="winner==='Monster'">
+          You lost !!
+        </h2>
+        <h2 v-if="winner==='Draw'">
+          Draw
+        </h2>
+        <h2 v-if="winner==='Player'">
+     Congrats!!! you win
+        </h2>
       </section>
       <section id="log" class="container">
         <h2>Battle Log</h2>
