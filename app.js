@@ -19,6 +19,11 @@ const app = Vue.createApp({
         },
         playerBarStyle() {
             return { width: this.playerHealth + '%' }
+        },
+        disableSpecialAttack() {
+
+            return (this.round % 3 !== 0) || (this.round == 0);
+
         }
     },
     methods: {
@@ -30,9 +35,10 @@ const app = Vue.createApp({
             }
             else {
                 this.monsterHealth -= attackValue;
-               
+
                 this.attackPlayer();
             }
+            this.round++;
         },
         attackPlayer() {
             const attackValue = randomValue(10, 20);
@@ -42,6 +48,7 @@ const app = Vue.createApp({
             else {
                 this.playerHealth -= attackValue;
             }
+
 
         },
         specialAttackMonster() {
@@ -54,6 +61,8 @@ const app = Vue.createApp({
                 this.monsterHealth -= attackValue;
             }
             this.attackPlayer();
+            this.round++;
+
         },
         healPlayer() {
 
@@ -65,29 +74,32 @@ const app = Vue.createApp({
                 this.playerHealth += healValue;
                 this.attackPlayer();
             }
+        },
+        surrender() {
+            this.playerHealth = 0;
         }
 
     },
-   watch: {
+    watch: {
         playerHealth(value) {
             if (value === 0 && this.monsterHealth === 0) {
                 this.winner = "Draw";
             }
-            else if(value===0) {
+            else if (value === 0) {
                 this.winner = "Monster";
             }
-             
+
         },
-        monsterHealth(value){
+        monsterHealth(value) {
             if (value === 0 && this.playerHealth === 0) {
                 this.winner = "Draw";
             }
-            else if(value===0) {
+            else if (value === 0) {
                 this.winner = "Player";
             }
         }
 
-       
+
 
     }
 
@@ -99,7 +111,7 @@ const app = Vue.createApp({
     //       } else if (value <= 0) {
     //         // Player lost
     //         this.winner = 'monster';
-           
+
     //       }
     //     },
     //     monsterHealth(value) {
