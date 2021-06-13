@@ -34,7 +34,7 @@ const app = Vue.createApp({
             }
         },
         attackPlayer() {
-            const attackValue = randomValue(10, 15);
+            const attackValue = randomValue(10, 20);
             if ((this.playerHealth - attackValue) <= 0) {
                 this.playerHealth = 0;
             }
