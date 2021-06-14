@@ -47,11 +47,17 @@
         <h2 v-if="winner==='Player'">
      Congrats!!! you win
         </h2>
+        
       </section>
       <section id="log" class="container">
         <h2>Battle Log</h2>
-        <ul></ul>
+        <ul>
+          <li v-for="record in history">
+            <span>{{record.action}}</span> <span>Done by {{record.who}}</span> <span>value= {{record.value}}</span>
+          </li>
+        </ul>
       </section>
+      
     </div>
   </body>
 </html>

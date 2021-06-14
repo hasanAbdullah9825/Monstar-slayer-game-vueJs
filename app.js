@@ -9,7 +9,8 @@ const app = Vue.createApp({
             monsterHealth: 100,
             playerHealth: 100,
             round: 0,
-            winner: null
+            winner: null,
+            history:[]
         };
     },
     computed: {
@@ -28,20 +29,26 @@ const app = Vue.createApp({
     },
     methods: {
         attackMonster() {
+            console.log(this.history)
             const attackValue = randomValue(10, 17);
+            this.addRecord("player","attack",attackValue);
             if ((this.monsterHealth - attackValue) <= 0) {
                 this.monsterHealth = 0;
                 this.attackPlayer();
+               
             }
             else {
                 this.monsterHealth -= attackValue;
 
                 this.attackPlayer();
             }
+
             this.round++;
+            
         },
         attackPlayer() {
             const attackValue = randomValue(10, 20);
+            this.addRecord("monstar","attack",attackValue);
             if ((this.playerHealth - attackValue) <= 0) {
                 this.playerHealth = 0;
             }
@@ -53,6 +60,7 @@ const app = Vue.createApp({
         },
         specialAttackMonster() {
             const attackValue = randomValue(22, 30);
+            this.addRecord("player","specialattack",attackValue);
 
             if ((this.monsterHealth - attackValue) <= 0) {
                 this.monsterHealth = 0;
@@ -67,6 +75,7 @@ const app = Vue.createApp({
         healPlayer() {
 
             const healValue = randomValue(30, 40);
+            this.addRecord("player","heal",healValue);
             if (this.playerHealth + healValue > 100) {
                 this.playerHealth = 100;
             }
@@ -79,6 +88,11 @@ const app = Vue.createApp({
         },
         surrender() {
             this.playerHealth = 0;
+            this.addRecord("player","surrender",0);
+        },
+        addRecord(who,action,actionValue){
+            this.history.unshift({who:who,action:action,value:actionValue});
+
         }
 
     },
